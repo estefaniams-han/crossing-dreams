@@ -2,7 +2,7 @@
 title: "Learning Korean From Scratch: What Actually Worked for Me"
 description: 'Coursera courses, a Korean studies center in Mexico, a lot of dramas, and one song that made everything click.'
 pubDate: 'Mar 08 2026'
-heroImage: '../../assets/blog-placeholder-4.jpg'
+heroImage: '../../assets/img2.jpg'
 tags: ['language', 'korean', 'learning']
 ---
 

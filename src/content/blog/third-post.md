@@ -2,7 +2,7 @@
 title: 'How I Actually Study Korean (And the Music That Helps)'
 description: 'No Pomodoro timers, no elaborate rituals. Just headphones, a glass of water, and lo-fi. This is what my study routine actually looks like.'
 pubDate: 'Mar 15 2026'
-heroImage: '../../assets/blog-placeholder-2.jpg'
+heroImage: '../../assets/img3.jpg'
 tags: ['music', 'study', 'life']
 ---
 

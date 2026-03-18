@@ -2,7 +2,7 @@
 title: 'What Nobody Tells You About the GKS Application'
 description: 'Eight months of rewriting essays, 80 universities to research, and a lot of uncertainty. Here is the honest version of what applying to the GKS scholarship actually looks like.'
 pubDate: 'Mar 01 2026'
-heroImage: '../../assets/blog-placeholder-3.jpg'
+heroImage: '../../assets/img1.jpg'
 tags: ['scholarship', 'gks', 'korea']
 ---
 
