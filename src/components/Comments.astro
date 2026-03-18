@@ -27,24 +27,55 @@ const isConfigured = REPO !== "your-username/your-repo";
 			<span class="comments-deco">✦</span>
 		</div>
 
-		<script
-			is:inline
-			src="https://giscus.app/client.js"
-			data-repo={REPO}
-			data-repo-id={REPO_ID}
-			data-category={CATEGORY}
-			data-category-id={CATEGORY_ID}
-			data-mapping="pathname"
-			data-strict="0"
-			data-reactions-enabled="1"
-			data-emit-metadata="0"
-			data-input-position="top"
-			data-theme="light"
-			data-lang="en"
-			data-loading="lazy"
-			crossorigin="anonymous"
-			async
-		></script>
+		<div id="giscus-container"></div>
+
+		<script is:inline define:vars={{ REPO, REPO_ID, CATEGORY, CATEGORY_ID }}>
+			function getGiscusTheme() {
+				return document.documentElement.getAttribute('data-theme') === 'dark'
+					? 'dark_dimmed'
+					: 'light';
+			}
+
+			function loadGiscus() {
+				const container = document.getElementById('giscus-container');
+				if (!container) return;
+				container.innerHTML = '';
+				const s = document.createElement('script');
+				s.src = 'https://giscus.app/client.js';
+				s.setAttribute('data-repo', REPO);
+				s.setAttribute('data-repo-id', REPO_ID);
+				s.setAttribute('data-category', CATEGORY);
+				s.setAttribute('data-category-id', CATEGORY_ID);
+				s.setAttribute('data-mapping', 'pathname');
+				s.setAttribute('data-strict', '0');
+				s.setAttribute('data-reactions-enabled', '1');
+				s.setAttribute('data-emit-metadata', '0');
+				s.setAttribute('data-input-position', 'top');
+				s.setAttribute('data-theme', getGiscusTheme());
+				s.setAttribute('data-lang', 'en');
+				s.setAttribute('data-loading', 'lazy');
+				s.setAttribute('crossorigin', 'anonymous');
+				s.async = true;
+				container.appendChild(s);
+			}
+
+			function sendGiscusTheme() {
+				const iframe = document.querySelector('iframe.giscus-frame');
+				if (!iframe) { loadGiscus(); return; }
+				iframe.contentWindow.postMessage(
+					{ giscus: { setConfig: { theme: getGiscusTheme() } } },
+					'https://giscus.app'
+				);
+			}
+
+			loadGiscus();
+
+			// Watch for theme changes
+			new MutationObserver(() => sendGiscusTheme()).observe(
+				document.documentElement,
+				{ attributes: true, attributeFilter: ['data-theme'] }
+			);
+		</script>
 	</div>
 ) : (
 	<div class="comments-pending">

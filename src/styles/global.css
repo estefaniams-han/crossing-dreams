@@ -19,6 +19,20 @@
 	--card-shadow-hover: 0 8px 32px rgba(180, 90, 120, 0.16);
 }
 
+[data-theme="dark"] {
+	--bg:            #1A1015;
+	--white:         #241419;
+	--text:          #F2E0E4;
+	--text-light:    #B08890;
+	--pink:          #E8789A;
+	--pink-dark:     #E8789A;
+	--pink-soft:     #3A1C26;
+	--border:        #3D2530;
+	--border-soft:   #2D1820;
+	--card-shadow:       0 2px 20px rgba(0, 0, 0, 0.3);
+	--card-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 html { background: var(--bg); }
 
@@ -160,4 +174,31 @@ hr { border: none; border-top: 1px solid var(--border); margin: 2em 0; }
 @media (max-width: 768px) {
 	body { font-size: 15px; }
 	h1 { font-size: 2em; }
+}
+
+/* ── Dark mode overrides for inline-styled cards in prose ── */
+[data-theme="dark"] .prose a[style],
+[data-theme="dark"] .prose div[style*="FCE8F2"],
+[data-theme="dark"] .prose div[style*="FEF7F2"] {
+	background: linear-gradient(135deg, var(--pink-soft), var(--white)) !important;
+	border-color: var(--border) !important;
+	border-left-color: var(--pink-dark) !important;
+}
+
+[data-theme="dark"] .prose a[style] span,
+[data-theme="dark"] .prose div[style*="FCE8F2"] span,
+[data-theme="dark"] .prose div[style*="FEF7F2"] span {
+	color: var(--text) !important;
+}
+
+[data-theme="dark"] .prose a[style] span[style*="C06080"],
+[data-theme="dark"] .prose div[style*="FCE8F2"] span[style*="C06080"],
+[data-theme="dark"] .prose div[style*="FEF7F2"] span[style*="C06080"] {
+	color: var(--pink-dark) !important;
+}
+
+[data-theme="dark"] .prose a[style] span[style*="9E7B80"],
+[data-theme="dark"] .prose div[style*="FCE8F2"] span[style*="9E7B80"],
+[data-theme="dark"] .prose div[style*="FEF7F2"] span[style*="9E7B80"] {
+	color: var(--text-light) !important;
 }
