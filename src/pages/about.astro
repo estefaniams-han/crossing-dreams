@@ -21,10 +21,27 @@ import Layout from '../layouts/BlogPost.astro';
 		manhwa chapter, a guitar riff, and a really good run.
 	</p>
 
-	<p>
-		Outside of work I do kickboxing, draw digitally, read a lot (books, manga, manhwa — all of it),
-		play guitar, go running, and spend time with my friends. I contain multitudes. We all do at 24.
-	</p>
+	<div class="currently-card">
+		<p class="currently-title">✦ &nbsp; currently</p>
+		<div class="currently-grid">
+			<div class="currently-item">
+				<span class="currently-label">studying</span>
+				<span class="currently-value">Korean A2 · waiting for GKS interview</span>
+			</div>
+			<div class="currently-item">
+				<span class="currently-label">watching</span>
+				<span class="currently-value">One Piece T2</span>
+			</div>
+			<div class="currently-item">
+				<span class="currently-label">listening</span>
+				<span class="currently-value">Autumn Morning — IU</span>
+			</div>
+			<div class="currently-item">
+				<span class="currently-label">dreaming of</span>
+				<span class="currently-value">빙수 in Seoul</span>
+			</div>
+		</div>
+	</div>
 
 	<h2>How Korea Entered My Life</h2>
 
@@ -61,3 +78,51 @@ import Layout from '../layouts/BlogPost.astro';
 		feels impossible, dreaming about a place you've never been — I hope this feels like company.
 	</p>
 </Layout>
+
+<style>
+	.currently-card {
+		background: linear-gradient(135deg, #FCE8F2, #FEF7F2);
+		border: 1px solid var(--border);
+		border-radius: 20px;
+		padding: 1.4em 1.6em;
+		margin: 0.5em 0 2.5em;
+	}
+
+	.currently-title {
+		font-family: var(--font-body);
+		font-size: 0.72em;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		color: var(--pink-dark);
+		text-transform: uppercase;
+		margin: 0 0 1em;
+	}
+
+	.currently-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6em;
+	}
+
+	.currently-item {
+		display: flex;
+		gap: 0.8em;
+		align-items: baseline;
+	}
+
+	.currently-label {
+		font-family: var(--font-body);
+		font-size: 0.75em;
+		font-weight: 600;
+		color: var(--pink-dark);
+		min-width: 90px;
+		letter-spacing: 0.04em;
+	}
+
+	.currently-value {
+		font-family: var(--font-heading);
+		font-size: 1em;
+		color: var(--text);
+		font-style: italic;
+	}
+</style>

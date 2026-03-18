@@ -32,7 +32,7 @@ const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).lengt
 				<!-- ── SIDEBAR ── -->
 				<aside class="sidebar">
 
-					<div class="sidebar-card">
+					<div class="sidebar-card author-card">
 						<Image
 							src={AvatarImg}
 							alt="Tefi"
@@ -41,11 +41,12 @@ const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).lengt
 							class="avatar"
 						/>
 						<p class="sidebar-name">Tefi</p>
-						<p class="sidebar-role">GKS dreamer & writer</p>
+						<p class="sidebar-role">engineer chasing a scholarship & a dream</p>
 						<p class="sidebar-bio">
-							Documenting my journey toward studying in South Korea —
-							from the scholarship process to learning Korean.
+							Somewhere between my A2 Korean class and a GKS application,
+							I started writing it all down. This is that.
 						</p>
+						<a href="/about" class="author-link">more about me →</a>
 					</div>
 
 					<div class="sidebar-card">
@@ -199,6 +200,23 @@ const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).lengt
 		line-height: 1.65;
 		margin: 0.2rem 0 0;
 	}
+
+	.author-card {
+		background: linear-gradient(160deg, #FCE8F2, #FEF7F2);
+		border: 1px solid var(--border);
+	}
+
+	.author-link {
+		margin-top: 0.4rem;
+		font-family: var(--font-body);
+		font-size: 0.76em;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		color: var(--pink-dark);
+		text-decoration: none;
+		transition: opacity 0.2s;
+	}
+	.author-link:hover { opacity: 0.7; }
 
 	.sidebar-heading {
 		font-family: var(--font-body);
