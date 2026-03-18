@@ -1,0 +1,49 @@
+---
+const today = new Date();
+---
+
+<footer>
+	<div class="footer-rule"></div>
+	<div class="footer-inner">
+		<p class="footer-deco">✦ &ensp; ✿ &ensp; ✦</p>
+		<p class="footer-name">Crossing Dreams</p>
+		<p class="footer-copy">&copy; {today.getFullYear()} — made with love from somewhere in the world</p>
+	</div>
+</footer>
+
+<style>
+	footer {
+		padding: 0 1.5rem 3rem;
+		text-align: center;
+		margin-top: 5rem;
+	}
+
+	.footer-rule {
+		max-width: 900px;
+		margin: 0 auto 2.5rem;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, var(--border), transparent);
+	}
+
+	.footer-deco {
+		font-size: 0.85em;
+		color: var(--pink);
+		letter-spacing: 0.4em;
+		margin: 0 0 0.6rem;
+	}
+
+	.footer-name {
+		font-family: var(--font-script);
+		font-size: 1.8em;
+		font-weight: 600;
+		color: var(--text-light);
+		margin: 0 0 0.4rem;
+	}
+
+	.footer-copy {
+		font-size: 0.74em;
+		color: var(--border);
+		margin: 0;
+		letter-spacing: 0.04em;
+	}
+</style>

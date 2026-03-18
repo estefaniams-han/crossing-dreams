@@ -1,0 +1,102 @@
+---
+// ─────────────────────────────────────────────
+// GISCUS COMMENTS
+// Before this works, complete the setup:
+//
+// 1. Create a public GitHub repo for your blog
+// 2. Enable Discussions on that repo
+//    (Settings → Features → Discussions ✓)
+// 3. Go to https://giscus.app and fill in your repo
+//    Copy the values below from the generated script
+// 4. Replace the PLACEHOLDERS below with your values
+// ─────────────────────────────────────────────
+
+const REPO        = "your-username/your-repo";   // e.g. "tefi/crossing-dreams"
+const REPO_ID     = "YOUR_REPO_ID";
+const CATEGORY    = "Announcements";
+const CATEGORY_ID = "YOUR_CATEGORY_ID";
+
+const isConfigured = REPO !== "your-username/your-repo";
+---
+
+{isConfigured ? (
+	<div class="comments-wrap">
+		<div class="comments-header">
+			<span class="comments-deco">✦</span>
+			<h3 class="comments-title">Comments</h3>
+			<span class="comments-deco">✦</span>
+		</div>
+
+		<script
+			is:inline
+			src="https://giscus.app/client.js"
+			data-repo={REPO}
+			data-repo-id={REPO_ID}
+			data-category={CATEGORY}
+			data-category-id={CATEGORY_ID}
+			data-mapping="pathname"
+			data-strict="0"
+			data-reactions-enabled="1"
+			data-emit-metadata="0"
+			data-input-position="top"
+			data-theme="light"
+			data-lang="en"
+			crossorigin="anonymous"
+			async
+		></script>
+	</div>
+) : (
+	<div class="comments-pending">
+		<span class="comments-deco">✦</span>
+		<p>
+			Comments coming soon — <a href="https://giscus.app" target="_blank">finish Giscus setup</a> to activate.
+		</p>
+	</div>
+)}
+
+<style>
+	.comments-wrap {
+		margin-top: 3rem;
+	}
+
+	.comments-header {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.comments-title {
+		font-family: var(--font-heading);
+		font-size: 1.6em;
+		font-weight: 400;
+		margin: 0;
+		color: var(--text);
+	}
+
+	.comments-deco {
+		color: var(--pink);
+		font-size: 0.9em;
+	}
+
+	.comments-pending {
+		margin-top: 3rem;
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+		justify-content: center;
+		padding: 1.5rem;
+		background: var(--pink-soft);
+		border-radius: 16px;
+		font-size: 0.88em;
+		color: var(--text-light);
+	}
+
+	.comments-pending a {
+		color: var(--pink-dark);
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+</style>

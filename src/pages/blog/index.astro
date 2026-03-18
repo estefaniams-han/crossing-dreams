@@ -1,0 +1,343 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import AvatarImg from '../../assets/blog-placeholder-about.jpg';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags ?? []))].sort();
+const recent = posts.slice(0, 3);
+
+const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).length / 200));
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`All Posts — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+
+		<main class="main">
+			<div class="layout">
+
+				<!-- ── SIDEBAR ── -->
+				<aside class="sidebar">
+
+					<div class="sidebar-card">
+						<Image
+							src={AvatarImg}
+							alt="Tefi"
+							width={80}
+							height={80}
+							class="avatar"
+						/>
+						<p class="sidebar-name">Tefi</p>
+						<p class="sidebar-role">GKS dreamer & writer</p>
+						<p class="sidebar-bio">
+							Documenting my journey toward studying in South Korea —
+							from the scholarship process to learning Korean.
+						</p>
+					</div>
+
+					<div class="sidebar-card">
+						<p class="sidebar-heading">✦ &nbsp; tag cloud</p>
+						<div class="tags">
+							{allTags.map((tag) => (
+								<a href={`/tags/${tag}`} class="tag">{tag}</a>
+							))}
+						</div>
+					</div>
+
+					<div class="sidebar-card">
+						<p class="sidebar-heading">✦ &nbsp; recent posts</p>
+						<div class="recent-list">
+							{recent.map((post) => (
+								<a href={`/blog/${post.id}/`} class="recent-item">
+									{post.data.heroImage && (
+										<Image
+											width={64}
+											height={64}
+											src={post.data.heroImage}
+											alt={post.data.title}
+											class="recent-img"
+										/>
+									)}
+									<div>
+										<p class="recent-title">{post.data.title}</p>
+										<p class="meta"><FormattedDate date={post.data.pubDate} /></p>
+									</div>
+								</a>
+							))}
+						</div>
+					</div>
+
+				</aside>
+
+				<!-- ── POSTS LIST ── -->
+				<section class="posts">
+					<p class="section-label">✦ &nbsp; all stories</p>
+
+					<div class="post-list">
+						{posts.map((post) => (
+							<article class="post-row">
+								{post.data.heroImage && (
+									<a href={`/blog/${post.id}/`} class="post-row-img-link">
+										{post.data.tags && post.data.tags[0] && (
+											<span class="card-cat">{post.data.tags[0]}</span>
+										)}
+										<Image
+											width={260}
+											height={180}
+											src={post.data.heroImage}
+											alt={post.data.title}
+											class="post-row-img"
+										/>
+									</a>
+								)}
+								<div class="post-row-body">
+									<div class="card-meta">
+										<span class="meta"><FormattedDate date={post.data.pubDate} /></span>
+										<span class="meta">· {readTime(post.body ?? '')} min read</span>
+									</div>
+									<h3 class="post-row-title">
+										<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+									</h3>
+									<p class="post-row-desc">{post.data.description}</p>
+									<div class="tags">
+										{post.data.tags?.map((tag: string) => (
+											<a href={`/tags/${tag}`} class="tag">{tag}</a>
+										))}
+									</div>
+								</div>
+							</article>
+						))}
+					</div>
+				</section>
+
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.main {
+		max-width: 1050px;
+		margin: 0 auto;
+		padding: 3rem 1.5rem;
+	}
+
+	.layout {
+		display: grid;
+		grid-template-columns: 280px 1fr;
+		gap: 2.5rem;
+		align-items: start;
+	}
+
+	/* ── SIDEBAR ── */
+	.sidebar {
+		display: flex;
+		flex-direction: column;
+		gap: 1.2rem;
+		position: sticky;
+		top: 2rem;
+	}
+
+	.sidebar-card {
+		background: var(--white);
+		border-radius: 20px;
+		padding: 1.4rem;
+		box-shadow: var(--card-shadow);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: 0.5rem;
+	}
+
+	.sidebar-card:not(:first-child) {
+		align-items: flex-start;
+		text-align: left;
+	}
+
+	.avatar {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 3px solid var(--pink-soft);
+	}
+
+	.sidebar-name {
+		font-family: var(--font-script);
+		font-size: 1.3em;
+		font-weight: 600;
+		margin: 0;
+		color: var(--text);
+	}
+
+	.sidebar-role {
+		font-size: 0.75em;
+		color: var(--pink-dark);
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		margin: 0;
+	}
+
+	.sidebar-bio {
+		font-size: 0.82em;
+		color: var(--text-light);
+		line-height: 1.65;
+		margin: 0.2rem 0 0;
+	}
+
+	.sidebar-heading {
+		font-family: var(--font-body);
+		font-size: 0.72em;
+		font-weight: 700;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+		color: var(--pink-dark);
+		margin: 0 0 0.8rem;
+	}
+
+	.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+	.recent-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.8rem;
+		width: 100%;
+	}
+
+	.recent-item {
+		display: flex;
+		gap: 0.7rem;
+		align-items: center;
+		text-decoration: none;
+		transition: opacity 0.2s;
+	}
+	.recent-item:hover { opacity: 0.75; }
+
+	.recent-img {
+		width: 56px;
+		height: 56px;
+		border-radius: 10px;
+		object-fit: cover;
+		flex-shrink: 0;
+	}
+
+	.recent-title {
+		font-size: 0.82em;
+		font-weight: 600;
+		color: var(--text);
+		margin: 0 0 0.2rem;
+		line-height: 1.3;
+	}
+
+	/* ── POSTS LIST ── */
+	.section-label {
+		font-family: var(--font-body);
+		font-size: 0.72em;
+		font-weight: 700;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--pink-dark);
+		margin: 0 0 1.2rem;
+	}
+
+	.post-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1.4rem;
+	}
+
+	.post-row {
+		background: var(--white);
+		border-radius: 20px;
+		overflow: hidden;
+		box-shadow: var(--card-shadow);
+		display: grid;
+		grid-template-columns: 220px 1fr;
+		transition: box-shadow 0.3s, transform 0.3s;
+	}
+	.post-row:hover {
+		box-shadow: var(--card-shadow-hover);
+		transform: translateY(-3px);
+	}
+
+	.post-row-img-link {
+		display: block;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.post-row-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		min-height: 160px;
+		transition: transform 0.4s;
+	}
+	.post-row-img-link:hover .post-row-img { transform: scale(1.05); }
+
+	.card-cat {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		background: var(--pink-dark);
+		color: var(--white);
+		font-size: 0.68em;
+		font-weight: 700;
+		font-family: var(--font-body);
+		letter-spacing: 0.06em;
+		padding: 3px 12px;
+		border-radius: 20px;
+		z-index: 1;
+	}
+
+	.post-row-body {
+		padding: 1.3rem 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		justify-content: center;
+	}
+
+	.card-meta { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+
+	.post-row-title {
+		font-size: 1.25em;
+		margin: 0;
+		line-height: 1.25;
+	}
+	.post-row-title a { color: var(--text); }
+	.post-row-title a:hover { color: var(--pink-dark); }
+
+	.post-row-desc {
+		font-size: 0.86em;
+		color: var(--text-light);
+		margin: 0;
+		line-height: 1.6;
+	}
+
+	/* ── RESPONSIVE ── */
+	@media (max-width: 860px) {
+		.layout { grid-template-columns: 1fr; }
+		.sidebar { position: static; }
+	}
+	@media (max-width: 560px) {
+		.post-row { grid-template-columns: 1fr; }
+		.post-row-img { height: 200px; }
+	}
+</style>

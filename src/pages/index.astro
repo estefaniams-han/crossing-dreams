@@ -1,0 +1,338 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import HeroImg from '../assets/blog-placeholder-about.jpg';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags ?? []))].sort();
+
+const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).length / 200));
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+
+		<main class="main">
+
+			<!-- ── HERO ── -->
+			<section class="hero">
+				<div class="hero-text">
+					<span class="hero-label">✦ &nbsp; my korea dream</span>
+					<h1 class="hero-heading">
+						Hey, I'm <span class="hero-name">Tefi</span> 👋
+					</h1>
+					<p class="hero-desc">
+						I'm chasing my dream of studying in South Korea through the GKS scholarship.
+						Here I document everything — the process, the language, the culture,
+						and someday, real life in Seoul.
+					</p>
+					<div class="hero-actions">
+						<a href="/about" class="btn">read my story</a>
+						<a href="/blog" class="btn btn-ghost">latest posts →</a>
+					</div>
+				</div>
+
+				<div class="hero-image-wrap">
+					<div class="hero-deco hero-deco-tl">✦</div>
+					<div class="hero-deco hero-deco-br">✿</div>
+					<Image
+						src={HeroImg}
+						alt="Tefi"
+						width={440}
+						height={500}
+						class="hero-img"
+					/>
+				</div>
+			</section>
+
+			<!-- ── BROWSE BY TAG ── -->
+			{allTags.length > 0 && (
+				<section class="tags-section">
+					<p class="section-label">✦ &nbsp; browse by topic</p>
+					<div class="tags-row">
+						{allTags.map((tag) => (
+							<a href={`/tags/${tag}`} class="tag tag-lg">{tag}</a>
+						))}
+					</div>
+				</section>
+			)}
+
+			<!-- ── LATEST POSTS ── -->
+			<section class="posts-section">
+				<p class="section-label">✦ &nbsp; latest stories</p>
+				<div class="cards-grid">
+					{posts.map((post) => (
+						<article class="card">
+							{post.data.heroImage && (
+								<a href={`/blog/${post.id}/`} class="card-img-link">
+									{post.data.tags && post.data.tags[0] && (
+										<span class="card-cat">{post.data.tags[0]}</span>
+									)}
+									<Image
+										width={420}
+										height={240}
+										src={post.data.heroImage}
+										alt={post.data.title}
+										class="card-img"
+									/>
+								</a>
+							)}
+							<div class="card-body">
+								<div class="card-meta">
+									<span class="meta"><FormattedDate date={post.data.pubDate} /></span>
+									<span class="meta">· {readTime(post.body ?? '')} min read</span>
+								</div>
+								<h3 class="card-title">
+									<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+								</h3>
+								<p class="card-desc">{post.data.description}</p>
+								<div class="tags">
+									{post.data.tags?.map((tag: string) => (
+										<a href={`/tags/${tag}`} class="tag">{tag}</a>
+									))}
+								</div>
+							</div>
+						</article>
+					))}
+				</div>
+			</section>
+
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.main {
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 3rem 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 4rem;
+	}
+
+	/* ── HERO ── */
+	.hero {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 3rem;
+		align-items: center;
+	}
+
+	.hero-text {
+		display: flex;
+		flex-direction: column;
+		gap: 1.1rem;
+	}
+
+	.hero-label {
+		font-family: var(--font-body);
+		font-size: 0.75em;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--pink-dark);
+	}
+
+	.hero-heading {
+		font-size: clamp(2em, 4.5vw, 3em);
+		line-height: 1.1;
+		margin: 0;
+	}
+
+	.hero-name {
+		color: var(--pink-dark);
+		font-style: italic;
+	}
+
+	.hero-desc {
+		font-size: 0.95em;
+		color: var(--text-light);
+		line-height: 1.75;
+		margin: 0;
+	}
+
+	.hero-actions {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+		margin-top: 0.4rem;
+	}
+
+	.hero-image-wrap {
+		position: relative;
+	}
+
+	.hero-img {
+		width: 100%;
+		height: 420px;
+		object-fit: cover;
+		border-radius: 24px;
+		display: block;
+		box-shadow: var(--card-shadow-hover);
+	}
+
+	.hero-deco {
+		position: absolute;
+		font-size: 1.4em;
+		color: var(--pink);
+		z-index: 1;
+	}
+	.hero-deco-tl { top: -16px; left: -16px; }
+	.hero-deco-br { bottom: -12px; right: -12px; }
+
+	/* ── TAGS SECTION ── */
+	.section-label {
+		font-family: var(--font-body);
+		font-size: 0.72em;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--pink-dark);
+		margin: 0 0 1rem;
+	}
+
+	.tags-section {
+		background: var(--white);
+		border-radius: 20px;
+		padding: 1.8rem 2rem;
+		box-shadow: var(--card-shadow);
+	}
+
+	.tags-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+	}
+
+	.tag-lg {
+		font-size: 0.82em;
+		padding: 6px 18px;
+	}
+
+	/* ── CARDS ── */
+	.posts-section {}
+
+	.cards-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.8rem;
+	}
+
+	.card {
+		background: var(--white);
+		border-radius: 20px;
+		overflow: hidden;
+		box-shadow: var(--card-shadow);
+		transition: box-shadow 0.3s ease, transform 0.3s ease;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.card:hover {
+		box-shadow: var(--card-shadow-hover);
+		transform: translateY(-4px);
+	}
+
+	.card-img-link {
+		display: block;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.card-img {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+		display: block;
+		transition: transform 0.4s ease;
+	}
+	.card-img-link:hover .card-img { transform: scale(1.05); }
+
+	.card-cat {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		background: var(--pink-dark);
+		color: var(--white);
+		font-size: 0.68em;
+		font-weight: 700;
+		font-family: var(--font-body);
+		letter-spacing: 0.06em;
+		padding: 3px 12px;
+		border-radius: 20px;
+		z-index: 1;
+	}
+
+	.card-body {
+		padding: 1.1rem 1.3rem 1.4rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		flex: 1;
+	}
+
+	.card-meta {
+		display: flex;
+		gap: 0.3rem;
+		flex-wrap: wrap;
+	}
+
+	.card-title {
+		font-size: 1.15em;
+		margin: 0;
+		line-height: 1.3;
+	}
+	.card-title a { color: var(--text); }
+	.card-title a:hover { color: var(--pink-dark); }
+
+	.card-desc {
+		font-size: 0.85em;
+		color: var(--text-light);
+		margin: 0;
+		line-height: 1.6;
+		flex: 1;
+	}
+
+	.card-footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 0.6rem;
+	}
+
+	.tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+	.card-author {
+		font-size: 0.72em;
+		color: var(--text-light);
+		font-style: italic;
+		white-space: nowrap;
+	}
+
+	/* ── RESPONSIVE ── */
+	@media (max-width: 860px) {
+		.hero { grid-template-columns: 1fr; }
+		.hero-image-wrap { order: -1; }
+		.hero-img { height: 300px; }
+		.cards-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+
+	@media (max-width: 560px) {
+		.cards-grid { grid-template-columns: 1fr; }
+	}
+</style>

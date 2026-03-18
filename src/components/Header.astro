@@ -1,0 +1,101 @@
+---
+import { SITE_TITLE } from '../consts';
+import HeaderLink from './HeaderLink.astro';
+---
+
+<header>
+	<div class="deco-top">✦ &ensp; ✿ &ensp; ✦</div>
+
+	<div class="masthead">
+		<a href="/" class="site-name">{SITE_TITLE}</a>
+		<p class="tagline">a dreamed life in south korea</p>
+	</div>
+
+	<nav>
+		<HeaderLink href="/">home</HeaderLink>
+		<span class="dot">·</span>
+		<HeaderLink href="/blog">posts</HeaderLink>
+		<span class="dot">·</span>
+		<HeaderLink href="/about">about</HeaderLink>
+	</nav>
+
+	<div class="header-rule"></div>
+</header>
+
+<style>
+	header {
+		background: var(--bg);
+		padding: 2rem 1.5rem 0;
+		text-align: center;
+	}
+
+	.deco-top {
+		font-size: 0.85em;
+		color: var(--pink);
+		letter-spacing: 0.4em;
+		margin-bottom: 0.8rem;
+	}
+
+	.masthead {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.2rem;
+		margin-bottom: 1.2rem;
+	}
+
+	.site-name {
+		font-family: var(--font-script);
+		font-size: clamp(2.6rem, 7vw, 4.8rem);
+		font-weight: 700;
+		color: var(--text);
+		text-decoration: none;
+		transition: color 0.2s;
+		line-height: 1.05;
+	}
+	.site-name:hover { color: var(--pink-dark); }
+
+	.tagline {
+		font-family: var(--font-body);
+		font-size: 0.76em;
+		font-weight: 300;
+		letter-spacing: 0.2em;
+		color: var(--text-light);
+		margin: 0;
+	}
+
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.7rem;
+		margin-bottom: 1.5rem;
+	}
+
+	nav :global(a) {
+		font-family: var(--font-body);
+		font-size: 0.78em;
+		font-weight: 500;
+		letter-spacing: 0.12em;
+		color: var(--text-light);
+		text-decoration: none;
+		transition: color 0.2s;
+		padding-bottom: 0.1em;
+	}
+
+	nav :global(a:hover),
+	nav :global(a.active) { color: var(--pink-dark); }
+
+	nav :global(a.active) {
+		border-bottom: 1.5px solid var(--pink);
+	}
+
+	.dot { color: var(--border); font-size: 0.9em; }
+
+	.header-rule {
+		max-width: 960px;
+		margin: 0 auto;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, var(--border), transparent);
+	}
+</style>
