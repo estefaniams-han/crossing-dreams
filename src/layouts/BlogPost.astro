@@ -17,6 +17,39 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 		<BaseHead title={title} description={description} />
 	</head>
 
+	<script is:inline>
+		document.addEventListener('DOMContentLoaded', () => {
+			const prose = document.querySelector('.prose');
+			if (!prose) return;
+
+			const walker = document.createTreeWalker(
+				prose,
+				NodeFilter.SHOW_TEXT,
+				{
+					acceptNode(node) {
+						if (node.parentElement?.closest('code, pre, a, h1, h2, h3, h4')) {
+							return NodeFilter.FILTER_REJECT;
+						}
+						return node.textContent?.includes('(')
+							? NodeFilter.FILTER_ACCEPT
+							: NodeFilter.FILTER_REJECT;
+					},
+				}
+			);
+
+			const nodes = [];
+			while (walker.nextNode()) nodes.push(walker.currentNode);
+
+			nodes.forEach((node) => {
+				const wrapper = document.createElement('span');
+				wrapper.innerHTML = node.textContent.replace(
+					/\(([^)]+)\)/g,
+					'<span class="parenthetical">($1)</span>'
+				);
+				node.parentNode.replaceChild(wrapper, node);
+			});
+		});
+	</script>
 	<body>
 		<Header />
 

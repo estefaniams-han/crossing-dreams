@@ -51,7 +51,7 @@ img { max-width: 100%; height: auto; }
 
 /* ── Prose ── */
 .prose { font-family: var(--font-body); font-size: 1.05em; line-height: 1.9; }
-.prose p { margin-bottom: 1.5em; }
+.prose p { margin-bottom: 1.5em; text-align: justify; }
 
 .prose p:first-of-type::first-letter {
 	font-family: var(--font-heading);
@@ -102,6 +102,16 @@ img { max-width: 100%; height: auto; }
 	transition: background 0.2s, color 0.2s;
 }
 .tag:hover { background: var(--pink); color: var(--white); }
+
+/* ── Parenthetical highlight ── */
+.parenthetical {
+	font-style: italic;
+	background: linear-gradient(transparent 52%, rgba(240, 160, 184, 0.38) 48%);
+	text-decoration: underline;
+	text-decoration-color: rgba(192, 96, 128, 0.35);
+	text-underline-offset: 3px;
+	text-decoration-thickness: 1px;
+}
 
 /* ── Buttons ── */
 .btn {
