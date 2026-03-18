@@ -8,7 +8,7 @@ import HeaderLink from './HeaderLink.astro';
 
 	<div class="masthead">
 		<a href="/" class="site-name">{SITE_TITLE}</a>
-		<p class="tagline">a dreamed life in south korea</p>
+		<p class="tagline">being better and fithing for a dream</p>
 	</div>
 
 	<nav>
@@ -22,6 +22,9 @@ import HeaderLink from './HeaderLink.astro';
 	</nav>
 
 	<button id="theme-toggle" class="theme-btn" aria-label="Toggle dark mode"></button>
+	<button id="back-to-top" class="top-btn" aria-label="Back to top">
+		<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+	</button>
 
 	<div class="header-rule"></div>
 </header>
@@ -42,6 +45,13 @@ import HeaderLink from './HeaderLink.astro';
 		updateIcon();
 	});
 	updateIcon();
+
+	// Back to top
+	const topBtn = document.getElementById('back-to-top');
+	window.addEventListener('scroll', () => {
+		topBtn.classList.toggle('visible', window.scrollY > 400);
+	});
+	topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 </script>
 
 <style>
@@ -133,6 +143,35 @@ import HeaderLink from './HeaderLink.astro';
 		transition: color 0.2s, transform 0.2s, box-shadow 0.2s;
 	}
 	.theme-btn:hover {
+		color: var(--pink-dark);
+		transform: translateY(-2px);
+	}
+
+	.top-btn {
+		position: fixed;
+		bottom: 5.5rem;
+		right: 2rem;
+		z-index: 100;
+		width: 42px;
+		height: 42px;
+		border-radius: 50%;
+		background: var(--white);
+		border: 1px solid var(--border);
+		box-shadow: var(--card-shadow-hover);
+		cursor: pointer;
+		color: var(--text-light);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.3s, color 0.2s, transform 0.2s;
+	}
+	.top-btn.visible {
+		opacity: 1;
+		pointer-events: auto;
+	}
+	.top-btn:hover {
 		color: var(--pink-dark);
 		transform: translateY(-2px);
 	}

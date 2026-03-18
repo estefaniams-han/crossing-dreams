@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Comments from '../components/Comments.astro';
 import Footer from '../components/Footer.astro';
@@ -10,6 +10,15 @@ import Header from '../components/Header.astro';
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
+
+const allPosts = await getCollection('blog');
+const related = allPosts
+	.filter(post => {
+		if (!tags || !post.data.tags) return false;
+		if (post.data.title === title) return false;
+		return post.data.tags.some((tag: string) => tags.includes(tag));
+	})
+	.slice(0, 3);
 ---
 
 <html lang="en">
@@ -92,6 +101,33 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 				<div class="prose" data-pagefind-body>
 					<slot />
 				</div>
+
+				{related.length > 0 && (
+					<div class="related">
+						<p class="related-label">✦   you might also like</p>
+						<div class="related-grid">
+							{related.map(post => (
+								<a href={} class="related-card">
+									{post.data.heroImage && (
+										<Image
+											src={post.data.heroImage}
+											alt={post.data.title}
+											width={400}
+											height={200}
+											class="related-img"
+										/>
+									)}
+									<div class="related-body">
+										{post.data.tags && post.data.tags[0] && (
+											<span class="related-tag">{post.data.tags[0]}</span>
+										)}
+										<p class="related-title">{post.data.title}</p>
+									</div>
+								</a>
+							))}
+						</div>
+					</div>
+				)}
 
 				<Comments />
 
@@ -188,4 +224,70 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 		transition: color 0.2s;
 	}
 	.back-link:hover { color: var(--pink-dark); }
+
+	.related {
+		margin-top: 3.5rem;
+	}
+
+	.related-label {
+		font-family: var(--font-body);
+		font-size: 0.72em;
+		font-weight: 700;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+		color: var(--pink-dark);
+		margin: 0 0 1.2rem;
+	}
+
+	.related-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 1rem;
+	}
+
+	.related-card {
+		background: var(--white);
+		border-radius: 16px;
+		overflow: hidden;
+		box-shadow: var(--card-shadow);
+		text-decoration: none;
+		display: flex;
+		flex-direction: column;
+		transition: box-shadow 0.2s, transform 0.2s;
+	}
+	.related-card:hover {
+		box-shadow: var(--card-shadow-hover);
+		transform: translateY(-3px);
+	}
+
+	.related-img {
+		width: 100%;
+		height: 120px;
+		object-fit: cover;
+		display: block;
+	}
+
+	.related-body {
+		padding: 0.8rem 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+	}
+
+	.related-tag {
+		font-family: var(--font-body);
+		font-size: 0.68em;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		color: var(--pink-dark);
+		text-transform: uppercase;
+	}
+
+	.related-title {
+		font-family: var(--font-heading);
+		font-size: 1em;
+		color: var(--text);
+		margin: 0;
+		line-height: 1.3;
+	}
 </style>
