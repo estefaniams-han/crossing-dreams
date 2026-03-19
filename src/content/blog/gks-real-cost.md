@@ -39,7 +39,7 @@ In my case, I chose to apostille notarized copies — partly because my state al
 
 ### Certified translations — the one that almost made me quit
 
-I needed certified translations (*perito traductor*) for the birth certificates, the degree, and the transcript. I found my translator through a personal recommendation — I'd suggest that over searching blindly, since rates vary a lot.
+I needed certified translations for the birth certificates, the degree, and the transcript. I found my translator through a personal recommendation — I'd suggest that over searching blindly, since rates vary a lot.
 
 A few things that caught me off guard:
 
