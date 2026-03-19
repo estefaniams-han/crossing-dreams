@@ -106,6 +106,7 @@ const related = allPosts
 						{updatedDate && (
 							<span class="meta">· updated: <FormattedDate date={updatedDate} /></span>
 						)}
+						<span class="meta">· <span id="view-count">—</span> views</span>
 					</div>
 
 					<div class="header-rule"></div>
@@ -167,6 +168,16 @@ const related = allPosts
 	</body>
 
 	<script is:inline>
+		// Page view counter
+		(function() {
+			const el = document.getElementById('view-count');
+			if (!el) return;
+			fetch('/.netlify/functions/pageviews?url=' + encodeURIComponent(window.location.pathname))
+				.then(r => r.json())
+				.then(d => { if (d.views !== undefined) el.textContent = d.views.toLocaleString(); })
+				.catch(() => {});
+		})();
+
 		// Table of contents — floating, auto-generated from h2s, shown only if 3+
 		(function() {
 			const prose = document.querySelector('.prose');
