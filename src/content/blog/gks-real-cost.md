@@ -1,6 +1,6 @@
 ---
-title: 'What the GKS Application Actually Costs (The Number Nobody Mentions)'
-description: 'Apostilles, certified translations, DHL, two full sets of documents — I spent around $842 USD just to submit. Here is the honest breakdown, with actual numbers.'
+title: 'What the GKS Scholarship Application Actually Costs — From Mexico'
+description: 'Apostilles, certified translations, DHL to Korea, two full sets of documents — I spent around $842 USD just to submit my GKS application. Honest breakdown with real numbers.'
 pubDate: 'Mar 18 2026'
 heroImage: '../../assets/img4.jpg'
 tags: ['scholarship', 'gks', 'korea', 'money', 'tips']
