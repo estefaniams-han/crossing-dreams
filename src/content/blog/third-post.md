@@ -3,7 +3,7 @@ title: 'How I Actually Study Korean (And the Music That Helps)'
 description: 'No Pomodoro timers, no elaborate rituals. Just headphones, a glass of water, and lo-fi. This is what my study routine actually looks like.'
 pubDate: 'Mar 15 2026'
 heroImage: '../../assets/img3.jpg'
-tags: ['music', 'study', 'life']
+tags: ['music', 'study', 'life', 'tips']
 ---
 
 I used to think I needed the perfect setup to study. The right app, the right method, a timer, a schedule, maybe some tea I'd never actually make. It took me a while to realize that all of that was just procrastination with better branding.
@@ -26,9 +26,9 @@ Instead, I fill a glass of water before I sit down. When the glass is empty, I g
 
 I study in the afternoon or evening — mornings don't work for me, my brain takes too long to warm up.
 
-My desk has a stand for my MacBook and a lamp with different light settings. I always use the warm one. Cold white light makes everything feel like a dentist's office. Warm light makes it feel like something you actually want to sit down and do.
+My desk has a stand for my laptop and a lamp with different light settings. I always use the warm one. Cold white light makes everything feel like a dentist's office. Warm light makes it feel like something you actually want to sit down and do.
 
-I also keep my iPad and Apple Pencil close by. I take notes in GoodNotes — there's something about writing by hand, even digitally, that makes new vocabulary stick differently than typing. I'll write a grammar structure five times and somehow it becomes mine in a way that staring at a screen doesn't.
+I also keep my iPad and pencil close by. I take notes in GoodNotes — there's something about writing by hand, even digitally, that makes new vocabulary stick differently than typing. I'll write a grammar structure five times and somehow it becomes mine in a way that staring at a screen doesn't.
 
 Before I start, I have a small ritual. I disconnect my phone from the internet (not off, just disconnected — there's a difference, and I need that boundary). I put something small and sweet nearby — just a little treat within reach. And most importantly: I answer every pending message and email before I open my notes. Not because I'm that organized, but because if I don't, those unanswered things sit in the back of my head the entire session and I study nothing. Better to deal with them first and start with a clear head.
 

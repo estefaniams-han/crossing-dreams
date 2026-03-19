@@ -1,0 +1,116 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title="404 — Crossing Dreams" description="This page doesn't exist." />
+	</head>
+	<body>
+		<main>
+			<p class="korean fade-in" style="animation-delay: 0s">길을 잃었어요</p>
+
+			<div class="rule fade-in" style="animation-delay: 0.4s"></div>
+
+			<h1 class="headline fade-in" style="animation-delay: 0.7s">Breaking News: Page Not Found</h1>
+
+			<p class="body-text fade-in" style="animation-delay: 1s">
+				Our correspondent ventured into unknown territory and found nothing but this message.
+				The page you're looking for may have moved, been deleted, or never existed at all.
+			</p>
+
+			<a href="/" class="back-btn fade-in" style="animation-delay: 1.3s">← back to home</a>
+
+		</main>
+	</body>
+</html>
+
+<style>
+	body {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+
+	main {
+		flex: 1;
+		max-width: 680px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		min-height: 100vh;
+	}
+
+	.edition-label {
+		font-family: var(--font-body);
+		font-size: 0.68em;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--pink-dark);
+		margin-bottom: 2rem;
+	}
+
+	.korean {
+		font-family: var(--font-heading);
+		font-size: clamp(3.5em, 10vw, 6em);
+		font-weight: 300;
+		color: var(--text);
+		margin: 0 0 1.2rem;
+		line-height: 1;
+	}
+
+	.rule {
+		width: 100%;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, var(--border), transparent);
+		margin-bottom: 1.8rem;
+	}
+
+	.headline {
+		font-family: var(--font-heading);
+		font-size: clamp(1.6em, 4vw, 2.4em);
+		font-weight: 400;
+		color: var(--text);
+		margin: 0 0 1.2rem;
+		line-height: 1.2;
+	}
+
+	.body-text {
+		font-family: var(--font-body);
+		font-size: 1em;
+		color: var(--text-light);
+		line-height: 1.8;
+		max-width: 480px;
+		margin: 0 0 1rem;
+	}
+
+	.translation {
+		font-family: var(--font-body);
+		font-size: 0.82em;
+		color: var(--text-light);
+		letter-spacing: 0.02em;
+		margin: 0 0 2.5rem;
+	}
+
+	.back-btn {
+		font-family: var(--font-body);
+		font-size: 0.85em;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		color: var(--white);
+		background: var(--pink-dark);
+		text-decoration: none;
+		padding: 0.65em 1.6em;
+		border-radius: 30px;
+		transition: background 0.2s, transform 0.2s;
+	}
+	.back-btn:hover {
+		background: #a84f6a;
+		transform: translateY(-2px);
+	}
+</style>

@@ -45,7 +45,7 @@ To make this easier, I built a tool that lets you search and filter programs bas
 
 I need to be honest with you: the essays almost broke me.
 
-Not because they were impossible, but because they mattered so much. The personal statement, the study plan, the research proposal — these aren't things you write once and submit. I rewrote mine over and over for about eight months. Each version felt closer, and then I'd read it again and see everything that was missing.
+Not because they were impossible, but because they mattered so much. The personal statement, the study plan — these aren't things you write once and submit. I rewrote mine over and over for about eight months. Each version felt closer, and then I'd read it again and see everything that was missing.
 
 What I didn't expect was that the process of rewriting taught me things. About what I actually wanted to research. About how to articulate ideas I had always felt but never put into words. By the end, the essays were genuinely mine — not a polished version of what I thought they wanted to hear, but an honest reflection of where I was going and why.
 
