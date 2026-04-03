@@ -198,7 +198,7 @@ You still have now. Use it.
 
 Keep learning the language. Keep building things. Let yourself cry if the One Piece soundtrack hits you in the middle of a Tuesday. Carry the loneliness gently — not because it stops hurting, but because it's part of the work, and the work was worth doing.
 
-Ivankov said it better than I ever could: *Miracles only happen to people who don't give up.*
+Ivankov (One Piece) said it better than I ever could: *Miracles only happen to people who don't give up.*
 
 So we keep going. We play the games, we watch the shows, we learn the language, we build the things. We don't give up before the email arrives — and if the email doesn't come, we don't give up then either. We figure out what's next. We find another door. We try again.
 
