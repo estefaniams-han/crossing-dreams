@@ -8,9 +8,10 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const posts = (await getCollection('blog')).sort(
+const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+const posts = allPosts.slice(0, 6);
 
 const allTags = [...new Set(posts.flatMap((p) => p.data.tags ?? []))].sort();
 
@@ -108,6 +109,11 @@ const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).lengt
 						</article>
 					))}
 				</div>
+				{allPosts.length > 6 && (
+					<div style="text-align:center;margin-top:2.5rem;">
+						<a href="/blog" class="btn btn-ghost">see all posts →</a>
+					</div>
+				)}
 			</section>
 
 		</main>

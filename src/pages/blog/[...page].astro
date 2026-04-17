@@ -1,6 +1,12 @@
 ---
 import { Image } from 'astro:assets';
+import type { Page } from 'astro';
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	page: Page<CollectionEntry<'blog'>>;
+}
 import AvatarImg from '../../assets/me.jpg';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
@@ -8,12 +14,21 @@ import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
-const posts = (await getCollection('blog')).sort(
+export async function getStaticPaths({ paginate }: { paginate: Function }) {
+	const posts = (await getCollection('blog')).sort(
+		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+	);
+	return paginate(posts, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
+const posts = page.data;
+
+const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
-
-const allTags = [...new Set(posts.flatMap((p) => p.data.tags ?? []))].sort();
-const recent = posts.slice(0, 3);
+const allTags = [...new Set(allPosts.flatMap((p: any) => p.data.tags ?? []))].sort();
+const recent = allPosts.slice(0, 3);
 
 const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).length / 200));
 ---
@@ -21,7 +36,10 @@ const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).lengt
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`All Posts — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<BaseHead
+			title={page.currentPage > 1 ? `All Posts — Page ${page.currentPage} — ${SITE_TITLE}` : `All Posts — ${SITE_TITLE}`}
+			description={SITE_DESCRIPTION}
+		/>
 	</head>
 	<body>
 		<Header />
@@ -52,7 +70,7 @@ const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).lengt
 					<div class="sidebar-card">
 						<p class="sidebar-heading">✦ &nbsp; tag cloud</p>
 						<div class="tags">
-							{allTags.map((tag) => (
+							{allTags.map((tag: string) => (
 								<a href={`/tags/${tag}`} class="tag">{tag}</a>
 							))}
 						</div>
@@ -61,7 +79,7 @@ const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).lengt
 					<div class="sidebar-card">
 						<p class="sidebar-heading">✦ &nbsp; recent posts</p>
 						<div class="recent-list">
-							{recent.map((post) => (
+							{recent.map((post: any) => (
 								<a href={`/blog/${post.id}/`} class="recent-item">
 									{post.data.heroImage && (
 										<Image
@@ -88,7 +106,7 @@ const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).lengt
 					<p class="section-label">✦ &nbsp; all stories</p>
 
 					<div class="post-list">
-						{posts.map((post) => (
+						{posts.map((post: any) => (
 							<article class="post-row">
 								{post.data.heroImage && (
 									<a href={`/blog/${post.id}/`} class="post-row-img-link">
@@ -122,6 +140,35 @@ const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).lengt
 							</article>
 						))}
 					</div>
+
+					<!-- ── PAGINATION ── -->
+					{page.lastPage > 1 && (
+						<nav class="pagination">
+							{page.url.prev ? (
+								<a href={page.url.prev} class="page-btn">← prev</a>
+							) : (
+								<span class="page-btn disabled">← prev</span>
+							)}
+
+							<div class="page-numbers">
+								{Array.from({ length: page.lastPage }, (_, i) => i + 1).map((n) => (
+									<a
+										href={n === 1 ? '/blog' : `/blog/${n}`}
+										class={`page-num ${n === page.currentPage ? 'active' : ''}`}
+									>
+										{n}
+									</a>
+								))}
+							</div>
+
+							{page.url.next ? (
+								<a href={page.url.next} class="page-btn">next →</a>
+							) : (
+								<span class="page-btn disabled">next →</span>
+							)}
+						</nav>
+					)}
+
 				</section>
 
 			</div>
@@ -347,6 +394,60 @@ const readTime = (body: string) => Math.max(1, Math.ceil(body.split(/\s+/).lengt
 		color: var(--text-light);
 		margin: 0;
 		line-height: 1.6;
+	}
+
+	/* ── PAGINATION ── */
+	.pagination {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+		margin-top: 2.5rem;
+		flex-wrap: wrap;
+	}
+
+	.page-btn {
+		font-family: var(--font-body);
+		font-size: 0.8em;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		color: var(--pink-dark);
+		text-decoration: none;
+		padding: 0.4em 1em;
+		border: 1.5px solid var(--pink-dark);
+		border-radius: 20px;
+		transition: background 0.2s, color 0.2s;
+	}
+	.page-btn:hover { background: var(--pink-dark); color: var(--white); }
+	.page-btn.disabled {
+		color: var(--border);
+		border-color: var(--border);
+		pointer-events: none;
+	}
+
+	.page-numbers {
+		display: flex;
+		gap: 0.3rem;
+	}
+
+	.page-num {
+		font-family: var(--font-body);
+		font-size: 0.82em;
+		font-weight: 600;
+		width: 2em;
+		height: 2em;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		text-decoration: none;
+		color: var(--text-light);
+		transition: background 0.2s, color 0.2s;
+	}
+	.page-num:hover { color: var(--pink-dark); }
+	.page-num.active {
+		background: var(--pink-dark);
+		color: var(--white);
 	}
 
 	/* ── RESPONSIVE ── */
