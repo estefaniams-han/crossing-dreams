@@ -240,7 +240,7 @@ Two days.
     var widget = document.getElementById('niied-final-countdown');
     if (!widget) return;
     if (now >= target) {
-      widget.innerHTML = '<p style="font-size:0.85em;color:var(--text-light);font-style:italic;margin:0;">the deadline has passed. whatever came, came.</p>';
+      widget.innerHTML = '<div style="font-size:0.85em;color:var(--text-light);font-style:italic;margin:0;padding:0.25rem 0.5rem;">the deadline has passed. whatever came, came.</div>';
       return;
     }
     var diff = target - now;

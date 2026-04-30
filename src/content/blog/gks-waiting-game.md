@@ -104,11 +104,11 @@ Two weeks sounds short. It doesn't feel short.
     var widget = document.getElementById('countdown-widget');
     if (!widget) return;
     if (now >= end) {
-      widget.innerHTML = '<p style="font-size:0.85em;color:var(--text-light);font-style:italic;margin:0;">the window has closed. whatever came, came.</p>';
+      widget.innerHTML = '<div style="font-size:0.85em;color:var(--text-light);font-style:italic;margin:0;padding:0.25rem 0.5rem;">the window has closed. whatever came, came.</div>';
       return;
     }
     if (now >= target) {
-      widget.innerHTML = '<p style="font-size:0.7em;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--pink-dark);margin:0 0 0.5rem;">✦ &nbsp; the results window is open</p><p style="font-size:0.85em;color:var(--text);margin:0;font-style:italic;">the email could come at any moment.</p>';
+      widget.innerHTML = '<div style="font-size:0.7em;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--pink-dark);margin:0 0 0.5rem;">✦ &nbsp; the results window is open</div><div style="font-size:0.85em;color:var(--text);margin:0;font-style:italic;">the email could come at any moment.</div>';
       return;
     }
     var diff = target - now;
