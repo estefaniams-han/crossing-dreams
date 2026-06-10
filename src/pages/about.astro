@@ -26,26 +26,50 @@ import Layout from '../layouts/BlogPost.astro';
 		<div class="currently-grid">
 			<div class="currently-item">
 				<span class="currently-label">studying</span>
-				<span class="currently-value">Korean A2 · waiting for GKS interview</span>
+				<span class="currently-value rotating" data-values='["Korean A2 · waiting for GKS interview", "systems thinking + AI pipelines", "how to say 괜찮아 without accent"]'></span>
 			</div>
 			<div class="currently-item">
 				<span class="currently-label">watching</span>
-				<span class="currently-value">One Piece T2</span>
+				<span class="currently-value rotating" data-values='["One Piece T2", "old K-drama comfort rewatches", "every GKS interview vlog I can find"]'></span>
 			</div>
 			<div class="currently-item">
 				<span class="currently-label">listening</span>
-				<span class="currently-value">Autumn Morning — IU</span>
+				<span class="currently-value rotating" data-values='["Autumn Morning — IU", "Lilac — IU", "Strawberry Moon — IU", "eight — IU ft. Suga"]'></span>
 			</div>
 			<div class="currently-item">
 				<span class="currently-label">dreaming of</span>
-				<span class="currently-value">빙수 in Korea</span>
+				<span class="currently-value rotating" data-values='["빙수 in Korea", "a window seat on a flight to Seoul", "편의점 at 2am", "speaking Korean without thinking first"]'></span>
 			</div>
 			<div class="currently-item">
 				<span class="currently-label">working on</span>
-				<span class="currently-value">showing up, even on the hard days</span>
+				<span class="currently-value rotating" data-values='["showing up, even on the hard days", "this blog, one post at a time", "being patient with the process"]'></span>
 			</div>
 		</div>
 	</div>
+
+	<script is:inline>
+		document.addEventListener('DOMContentLoaded', function () {
+			var items = document.querySelectorAll('.currently-value.rotating');
+			var indexes = [];
+
+			items.forEach(function (el, i) {
+				var values = JSON.parse(el.dataset.values || '[]');
+				indexes[i] = 0;
+				el.textContent = values[0];
+
+				setTimeout(function () {
+					setInterval(function () {
+						indexes[i] = (indexes[i] + 1) % values.length;
+						el.classList.add('fade-out');
+						setTimeout(function () {
+							el.textContent = values[indexes[i]];
+							el.classList.remove('fade-out');
+						}, 350);
+					}, 6000);
+				}, i * 700);
+			});
+		});
+	</script>
 
 	<h2>How Korea Entered My Life</h2>
 
@@ -128,5 +152,10 @@ import Layout from '../layouts/BlogPost.astro';
 		font-size: 1em;
 		color: var(--text);
 		font-style: italic;
+		transition: opacity 0.35s ease;
+	}
+
+	.currently-value.fade-out {
+		opacity: 0;
 	}
 </style>
